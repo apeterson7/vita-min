@@ -759,12 +759,11 @@ describe Intake do
     let(:intake) { build :intake, vita_partner: vita_partner }
 
     before do
-      allow(vita_partner).to receive(:has_capacity_for?).with(intake).and_return(true)
+      allow(vita_partner).to receive(:at_capacity?).and_return(true)
     end
 
-    it "returns true if the partner does not have capacity for this intake" do
-      expect(intake.might_encounter_delayed_service?).to eq false
-      expect(vita_partner).to have_received(:has_capacity_for?).with(intake)
+    it "returns true if the partner is at capacity" do
+      expect(intake.might_encounter_delayed_service?).to eq true
     end
   end
 

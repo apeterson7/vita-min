@@ -479,7 +479,7 @@ class Intake < ApplicationRecord
   end
 
   def might_encounter_delayed_service?
-    !vita_partner.has_capacity_for?(self)
+    vita_partner.at_capacity?
   end
 
   def contact_info_filtered_by_preferences
