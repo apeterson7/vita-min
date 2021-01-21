@@ -46,10 +46,9 @@ class VitaPartner < ApplicationRecord
     raise StandardError if site?
     return false if weekly_capacity_limit.blank?
 
-    included_statuses = TaxReturnStatus::STATUSES.keys - [:intake_before_consent, :intake_in_progress, :file_accepted, :file_not_filing]
     Client
       .where(vita_partner_id: [id, *child_site_ids])
-      .joins(:tax_returns).where(tax_returns: { status: included_statuses })
+      .joins(:tax_returns).where(tax_returns: { status: TaxReturnStatus.statuses_that_count_towards_capacity })
       .count >= weekly_capacity_limit
   end
 

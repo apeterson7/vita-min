@@ -478,10 +478,6 @@ class Intake < ApplicationRecord
     ].compact.presence || [I18n.t("general.single")]
   end
 
-  def might_encounter_delayed_service?
-    vita_partner.at_capacity?
-  end
-
   def contact_info_filtered_by_preferences
     contact_info = {}
     contact_info[:sms_phone_number] = standardized_sms_phone_number if sms_notification_opt_in_yes?
